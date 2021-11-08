@@ -17,6 +17,11 @@ export class AppService {
     if (authToken) {
       user = await admin.auth().verifyIdToken(authToken);
       console.log({ user });
+      console.log({
+        expiredIn: new Date(
+          new Date().setTime(user.exp * 1000),
+        ).toLocaleTimeString(),
+      });
     }
     return { isLoggedIn: !!user, token: authToken, user: user };
   }
