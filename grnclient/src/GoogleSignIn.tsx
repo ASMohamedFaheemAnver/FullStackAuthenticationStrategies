@@ -3,8 +3,7 @@ import {
   GoogleSignin,
   statusCodes,
 } from '@react-native-google-signin/google-signin';
-import axios from 'axios';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {ScrollView, Text, TouchableOpacity} from 'react-native';
 import config from './config';
 
@@ -13,6 +12,12 @@ GoogleSignin.configure({
 });
 
 const GoogleSignIn = () => {
+  useEffect(() => {
+    (async () => {
+      console.log({googleUser: await GoogleSignin.getCurrentUser()});
+      console.log({firebaseUser: await auth().currentUser});
+    })();
+  }, []);
   const onGoogleButtonPress = async () => {
     try {
       const {idToken} = await GoogleSignin.signIn();
@@ -20,17 +25,20 @@ const GoogleSignIn = () => {
       const googleCredential = await auth.GoogleAuthProvider.credential(
         idToken,
       );
-      auth().signInWithCredential(googleCredential);
+      await auth().signInWithCredential(googleCredential);
       const currentUserIdToken = await auth().currentUser?.getIdToken();
       console.log({currentUserIdToken});
 
-      const res = await axios.get(config.baseUrl, {
-        headers: {
-          Authorization: `Bearer ${currentUserIdToken}`,
-        },
-      });
-      console.log({res});
-      await auth().signOut();
+      // const res = await axios.get(config.baseUrl, {
+      //   headers: {
+      //     Authorization: `Bearer ${currentUserIdToken}`,
+      //   },
+      // });
+      // console.log({res});
+      // await auth().signOut();
+      // await GoogleSignin.signOut();
+      console.log({googleUser: await GoogleSignin.getCurrentUser()});
+      console.log({firebaseUser: await auth().currentUser});
     } catch (e: any) {
       console.log({e});
       if (e.code === statusCodes.SIGN_IN_CANCELLED) {

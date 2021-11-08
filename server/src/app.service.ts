@@ -18,6 +18,6 @@ export class AppService {
       user = await admin.auth().verifyIdToken(authToken);
       console.log({ user });
     }
-    return { isLoggedIn: false, token: authToken, user: user };
+    return { isLoggedIn: !!user, token: authToken, user: user };
   }
 }
