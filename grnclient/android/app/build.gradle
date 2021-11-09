@@ -199,6 +199,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
     implementation "com.google.android.gms:play-services-auth:${safeExtGet('googlePlayServicesAuthVersion', '19.2.0')}"
+    implementation 'com.google.firebase:firebase-auth'
     // UDEV END
 
     implementation fileTree(dir: "libs", include: ["*.jar"])
