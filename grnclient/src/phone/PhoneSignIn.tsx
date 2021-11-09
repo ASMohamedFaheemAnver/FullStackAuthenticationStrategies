@@ -9,8 +9,11 @@ const PhoneSignIn = () => {
 
   useEffect(() => {
     (async () => {
-      console.log({currentUser: await auth().currentUser});
-      console.log({userIdToken: await auth().currentUser?.getIdToken()});
+      if (await auth().currentUser) {
+        console.log({currentUser: await auth().currentUser});
+        console.log({userIdToken: await auth().currentUser?.getIdToken()});
+        await auth().signOut();
+      }
     })();
   }, []);
 
