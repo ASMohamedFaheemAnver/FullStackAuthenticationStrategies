@@ -1,0 +1,3 @@
+# https://github.com/react-native-seoul/react-native-naver-login
+# Could not find com.naver.nid:naveridlogin-android-sdk:4.2.6 error How to solve.
+# https://githubmate.com/repo/react-native-seoul/react-native-naver-login/issues/104

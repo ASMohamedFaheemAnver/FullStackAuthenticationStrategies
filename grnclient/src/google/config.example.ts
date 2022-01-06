@@ -1,2 +1,5 @@
-const webClientId = '';
-export default webClientId;
+const config = {
+  webClientId: '',
+  baseUrl: '',
+};
+export default config;
