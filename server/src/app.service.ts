@@ -8,7 +8,7 @@ export class AppService {
       credential: credential.cert('./src/serviceAccountKey.json'),
     });
   }
-  async velidateToken(
+  async validateToken(
     token: string,
   ): Promise<{ isLoggedIn: boolean; token: string; user: any }> {
     const authToken = token?.split(/\s/g)[1];

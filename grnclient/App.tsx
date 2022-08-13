@@ -7,9 +7,9 @@ import PhoneSignIn from './src/phone/PhoneSignIn';
 const App = () => {
   return (
     <SafeAreaView>
-      {false && <GoogleSignIn />}
+      {true && <GoogleSignIn />}
       {false && <PhoneSignIn />}
-      {true && <NaverSignIn />}
+      {false && <NaverSignIn />}
     </SafeAreaView>
   );
 };

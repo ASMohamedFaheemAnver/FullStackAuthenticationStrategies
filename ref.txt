@@ -1,0 +1,3 @@
+# From documentations we I think it's not recommended use passport strategies other than jwt to create a proper rest/graphql server.
+# Using passport-google-oauth with react-native
+# https://stackoverflow.com/questions/30420056/using-passport-google-oauth-with-react-native

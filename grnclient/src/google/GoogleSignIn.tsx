@@ -25,6 +25,7 @@ const GoogleSignIn = () => {
       const googleCredential = await auth.GoogleAuthProvider.credential(
         idToken,
       );
+
       await auth().signInWithCredential(googleCredential);
       const currentUserIdToken = await auth().currentUser?.getIdToken();
       console.log({currentUserIdToken});
