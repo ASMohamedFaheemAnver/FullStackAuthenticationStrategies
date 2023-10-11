@@ -2,6 +2,7 @@ import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
 import React, {useEffect, useState} from 'react';
 import {ScrollView, Text, TextInput, TouchableOpacity} from 'react-native';
 import config from './config';
+
 const PhoneSignIn = () => {
   const [code, setCode] = useState<string>();
   const [confirm, setConfirm] =
@@ -9,8 +10,8 @@ const PhoneSignIn = () => {
 
   useEffect(() => {
     (async () => {
-      if (await auth().currentUser) {
-        console.log({currentUser: await auth().currentUser});
+      if (auth().currentUser) {
+        console.log({currentUser: auth().currentUser});
         console.log({userIdToken: await auth().currentUser?.getIdToken()});
         await auth().signOut();
       }

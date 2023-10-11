@@ -6,6 +6,7 @@ import {
 import React, {useEffect} from 'react';
 import {ScrollView, Text, TouchableOpacity} from 'react-native';
 import config from './config';
+import axios from 'axios';
 
 GoogleSignin.configure({
   webClientId: config.webClientId,
@@ -22,24 +23,22 @@ const GoogleSignIn = () => {
     try {
       const {idToken} = await GoogleSignin.signIn();
       console.log({idToken});
-      const googleCredential = await auth.GoogleAuthProvider.credential(
-        idToken,
-      );
+      const googleCredential = auth.GoogleAuthProvider.credential(idToken);
 
       await auth().signInWithCredential(googleCredential);
       const currentUserIdToken = await auth().currentUser?.getIdToken();
       console.log({currentUserIdToken});
 
-      // const res = await axios.get(config.baseUrl, {
-      //   headers: {
-      //     Authorization: `Bearer ${currentUserIdToken}`,
-      //   },
-      // });
-      // console.log({res});
+      const res = await axios.get(config.baseUrl, {
+        headers: {
+          Authorization: `Bearer ${currentUserIdToken}`,
+        },
+      });
+      console.log({res});
       // await auth().signOut();
       // await GoogleSignin.signOut();
       console.log({googleUser: await GoogleSignin.getCurrentUser()});
-      console.log({firebaseUser: await auth().currentUser});
+      console.log({firebaseUser: auth().currentUser});
     } catch (e: any) {
       console.log({e});
       if (e.code === statusCodes.SIGN_IN_CANCELLED) {
