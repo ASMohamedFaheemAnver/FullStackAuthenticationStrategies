@@ -1,0 +1,6 @@
+# Start setting up firebase config using this doc.
+# https://rnfirebase.io/
+# Social auth google
+# https://rnfirebase.io/auth/social-auth#google
+# Google auth setup
+# https://github.com/react-native-google-signin/google-signin#project-setup-and-initialization
