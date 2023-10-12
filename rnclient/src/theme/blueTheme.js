@@ -1,0 +1,37 @@
+export const BlueTheme = {
+  theme: 'blue',
+  light: {
+    dark: false,
+    colors: {
+      primary: '#90DBF4',
+      primaryDark: '#5DA9C1',
+      primaryLight: '#5DA9C1',
+      accent: '#A6B7C6',
+      background: '#FBFBFB',
+      card: 'white',
+      card2: '#E7E9EC',
+      text: '#303030',
+      border: '#A6B7C6',
+      white: '#FFFF',
+      button: '#DBDDE1',
+      error: '#E5383B',
+    },
+  },
+  dark: {
+    dark: true,
+    colors: {
+      primary: '#90DBF4',
+      primaryDark: '#5DA9C1',
+      primaryLight: '#5DA9C1',
+      accent: '#A6B7C6',
+      background: '#082032',
+      card: '#334756',
+      card2: '#334756',
+      text: '#e5e5e7',
+      border: '#B9C0CA',
+      button: '#082032',
+      white: '#FFFF',
+      error: '#E5383B',
+    },
+  },
+};

@@ -1,0 +1,37 @@
+export const PinkTheme = {
+  theme: 'pink',
+  light: {
+    dark: false,
+    colors: {
+      primary: '#EA4B8B',
+      primaryDark: '#b3005e',
+      primaryLight: '#ff80bb',
+      accent: '#A6B7C6',
+      background: '#FBFBFB',
+      card: 'white',
+      card2: '#E7E9EC',
+      text: '#303030',
+      border: '#A6B7C6',
+      white: '#FFFF',
+      button: '#DBDDE1',
+      error: '#F5B841',
+    },
+  },
+  dark: {
+    dark: true,
+    colors: {
+      primary: '#EA4B8B',
+      primaryDark: '#b3005e',
+      primaryLight: '#ff80bb',
+      accent: '#A6B7C6',
+      background: '#082032',
+      card: '#334756',
+      card2: '#334756',
+      text: '#e5e5e7',
+      border: '#B9C0CA',
+      button: '#082032',
+      white: '#FFFF',
+      error: '#F5B841',
+    },
+  },
+};
