@@ -4,3 +4,8 @@
 # https://rnfirebase.io/auth/social-auth#google
 # Google auth setup
 # https://github.com/react-native-google-signin/google-signin#project-setup-and-initialization
+
+
+
+# How to fix jlink does not exist
+# Need to install jlink separately in ubuntu I guess
