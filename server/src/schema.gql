@@ -6,6 +6,11 @@ type Message {
   message: String!
 }
 
+type User {
+  name: String!
+}
+
 type Query {
   root: Message!
+  me: User!
 }

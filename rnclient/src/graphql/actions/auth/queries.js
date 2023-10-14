@@ -1,4 +1,4 @@
 import {useLazyQuery} from '@apollo/client';
-import {GET_ALL_COMMENTS_QUERY} from '@graphql/queries/auth';
+import {GET_ME_QUERY} from '@graphql/queries/auth';
 
-export const useGetAllComments = () => useLazyQuery(GET_ALL_COMMENTS_QUERY);
+export const useGetMeQuery = () => useLazyQuery(GET_ME_QUERY);

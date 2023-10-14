@@ -7,9 +7,6 @@ export type UserDocument = User & Document;
 export class User {
   @Prop({ type: String, unique: true })
   name: string;
-
-  @Prop(Number)
-  age: number;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

@@ -7,9 +7,26 @@ import { AppResolver } from './app.resolver';
 import { AppService } from './app.service';
 import { User, UserSchema } from './schemas/user.schema';
 import config from './config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { PassportModule } from '@nestjs/passport';
+import {
+  EnvKeys,
+  FilePaths,
+  PassportAuthStrategies,
+} from './constants/strings';
+import { CommonNumbers } from './constants/numbers';
+import { JwtModule } from '@nestjs/jwt';
+import { JwtStrategy } from './strategies/jwt-strategy';
+import { FirebaseAdminModule } from '@aginix/nestjs-firebase-admin';
+import * as admin from 'firebase-admin';
+import { FirebaseStrategy } from './strategies/firebase-strategy';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: `.env.${process.env.NODE_ENV}`,
+    }),
     MongooseModule.forRoot(config.dbUri),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
@@ -17,8 +34,26 @@ import config from './config';
       playground: process.env.NODE_ENV !== 'prod',
     }),
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
+    // We can only import PassportModule.
+    PassportModule.register({
+      defaultStrategy: PassportAuthStrategies.jwt,
+    }),
+    JwtModule.registerAsync({
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => ({
+        secret: config.get<string>(EnvKeys.JWT_SECRET),
+        signOptions: {
+          expiresIn: CommonNumbers.jwtExpiresIn,
+        },
+      }),
+    }),
+    FirebaseAdminModule.forRootAsync({
+      useFactory: () => ({
+        credential: admin.credential.cert(require(FilePaths.firebaseAdminKey)),
+      }),
+    }),
   ],
   controllers: [],
-  providers: [AppResolver, AppService],
+  providers: [AppResolver, AppService, JwtStrategy, FirebaseStrategy],
 })
 export class AppModule {}

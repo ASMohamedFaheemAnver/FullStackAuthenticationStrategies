@@ -1,11 +1,9 @@
 import {gql} from '@apollo/client';
 
-export const GET_ALL_COMMENTS_QUERY = gql`
+export const GET_ME_QUERY = gql`
   query {
-    comments {
-      data {
-        id
-      }
+    me {
+      name
     }
   }
 `;

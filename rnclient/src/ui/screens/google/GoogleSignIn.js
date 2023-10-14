@@ -6,18 +6,23 @@ import {
 import React, {useEffect} from 'react';
 import {ScrollView, Text, TouchableOpacity} from 'react-native';
 import config from './config';
+import {useGetMeQuery} from '@graphql/actions/auth/queries';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {AsyncStorageKeys} from '@constants/strings';
 
 GoogleSignin.configure({
   webClientId: config.webClientId,
 });
 
 const GoogleSignIn = () => {
+  const user = auth().currentUser;
+  const [getMeQuery, {data, error}] = useGetMeQuery();
   useEffect(() => {
-    (async () => {
-      console.log({googleUser: await GoogleSignin.getCurrentUser()});
-      console.log({firebaseUser: auth().currentUser});
-    })();
-  }, []);
+    if (user?.email) {
+      console.log({user});
+      getMeQuery({});
+    }
+  }, [user?.email]);
 
   const onGoogleButtonPress = async () => {
     try {
@@ -29,15 +34,14 @@ const GoogleSignIn = () => {
       await auth().signInWithCredential(googleCredential);
       const currentUserIdToken = await auth().currentUser?.getIdToken();
       console.log({currentUserIdToken});
-      // const res = await axios.get(config.baseUrl, {
-      //   headers: {
-      //     Authorization: `Bearer ${currentUserIdToken}`,
-      //   },
-      // });
-      // console.log({res});
       // await auth().signOut();
       console.log({googleUser: await GoogleSignin.getCurrentUser()});
       console.log({firebaseUser: auth().currentUser});
+      // Save token
+      await AsyncStorage.setItem(
+        AsyncStorageKeys.authorizationToken,
+        currentUserIdToken,
+      );
     } catch (e) {
       console.log({e});
       if (e.code === statusCodes.SIGN_IN_CANCELLED) {
