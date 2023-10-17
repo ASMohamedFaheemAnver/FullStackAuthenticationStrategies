@@ -15,6 +15,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {createUploadLink} from 'apollo-upload-client';
 import {Kind, OperationTypeNode} from 'graphql';
 import {SubscriptionClient} from 'subscriptions-transport-ws';
+import auth from '@react-native-firebase/auth';
 
 // Graphql server link
 const httpLink = createUploadLink({
@@ -32,7 +33,9 @@ const client = new SubscriptionClient(
 
 // Return stored auth token
 const getAuthToken = async () => {
+  const currentUserIdToken = await auth().currentUser?.getIdToken();
   const token = await AsyncStorage.getItem(AsyncStorageKeys.authorizationToken);
+  console.log({currentUserIdToken, token});
   return token;
 };
 

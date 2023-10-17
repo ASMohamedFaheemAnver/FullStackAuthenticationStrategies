@@ -16,13 +16,11 @@ export class AuthGuard extends PassportAuthGuard([
     super();
   }
   getRequest(context: ExecutionContext) {
-    Logger.log(this.getRequest.name);
     const ctx = GqlExecutionContext.create(context);
     return ctx.getContext().req;
   }
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    Logger.log(this.canActivate.name);
     try {
       await super.canActivate(context);
       const request = this.getRequest(context);

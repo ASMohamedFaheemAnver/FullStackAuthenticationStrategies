@@ -1,5 +1,5 @@
 import { PassportStrategy } from '@nestjs/passport';
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { Strategy, ExtractJwt } from 'passport-firebase-jwt';
 import { FirebaseAuthenticationService } from '@aginix/nestjs-firebase-admin';
 
@@ -12,8 +12,10 @@ export class FirebaseStrategy extends PassportStrategy(Strategy) {
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
     });
   }
-
   async validate(token: string) {
+    Logger.log(this.validate.name, {
+      token,
+    });
     return this.firebaseAuthenticationService.verifyIdToken(token, true);
   }
 }

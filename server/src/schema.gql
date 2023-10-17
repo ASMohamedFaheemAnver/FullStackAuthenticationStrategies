@@ -10,7 +10,13 @@ type User {
   name: String!
 }
 
+type AuthPayload {
+  token: String!
+  name: String!
+}
+
 type Query {
   root: Message!
+  signIn: AuthPayload!
   me: User!
 }

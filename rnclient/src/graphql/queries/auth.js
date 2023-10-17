@@ -7,3 +7,12 @@ export const GET_ME_QUERY = gql`
     }
   }
 `;
+
+export const SIGN_IN_QUERY = gql`
+  query {
+    signIn {
+      token
+      name
+    }
+  }
+`;

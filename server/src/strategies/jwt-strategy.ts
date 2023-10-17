@@ -3,8 +3,6 @@ import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { EnvKeys } from 'src/constants/strings';
-import { Types } from 'mongoose';
-import { User } from 'src/common/user';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -15,12 +13,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate(payload: {
-    _id: Types.ObjectId;
-    type: string;
-    iat: number;
-    exp: number;
-  }): Promise<User> {
+  async validate(payload: { name: string; iat: number; exp: number }) {
     try {
       Logger.log(this.validate.name, {
         payload,
@@ -29,6 +22,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       console.log({ e });
     }
     // Need to use payload and return user data
-    return { name: 'UDEV' };
+    return payload;
   }
 }

@@ -6,7 +6,7 @@ import {
 import React, {useEffect} from 'react';
 import {ScrollView, Text, TouchableOpacity} from 'react-native';
 import config from './config';
-import {useGetMeQuery} from '@graphql/actions/auth/queries';
+import {useGetMeQuery, useSignInQuery} from '@graphql/actions/auth/queries';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {AsyncStorageKeys} from '@constants/strings';
 
@@ -17,12 +17,31 @@ GoogleSignin.configure({
 const GoogleSignIn = () => {
   const user = auth().currentUser;
   const [getMeQuery, {data, error}] = useGetMeQuery();
+  const [signInQuery, {data: signInData}] = useSignInQuery();
   useEffect(() => {
     if (user?.email) {
       console.log({user});
       getMeQuery({});
     }
   }, [user?.email]);
+
+  useEffect(() => {
+    signInQuery({});
+  }, []);
+
+  useEffect(() => {
+    if (data) {
+      console.log({data});
+    }
+  }, [data]);
+  useEffect(() => {
+    if (signInData) {
+      console.log({signInData});
+      const token = signInData?.signIn?.token;
+      if (token)
+        AsyncStorage.setItem(AsyncStorageKeys.authorizationToken, token);
+    }
+  }, [signInData]);
 
   const onGoogleButtonPress = async () => {
     try {
@@ -38,10 +57,10 @@ const GoogleSignIn = () => {
       console.log({googleUser: await GoogleSignin.getCurrentUser()});
       console.log({firebaseUser: auth().currentUser});
       // Save token
-      await AsyncStorage.setItem(
-        AsyncStorageKeys.authorizationToken,
-        currentUserIdToken,
-      );
+      // await AsyncStorage.setItem(
+      //   AsyncStorageKeys.authorizationToken,
+      //   currentUserIdToken,
+      // );
     } catch (e) {
       console.log({e});
       if (e.code === statusCodes.SIGN_IN_CANCELLED) {
