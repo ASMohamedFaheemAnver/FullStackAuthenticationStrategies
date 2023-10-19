@@ -1,0 +1,27 @@
+### POST login
+POST http://localhost:4000/login
+Content-Type: application/json
+
+{
+  "username": "udev"
+}
+
+### POST token
+POST http://localhost:4000/token
+Content-Type: application/json
+
+{
+  "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVkZXYiLCJnZW5lcmF0ZWRCeSI6IlVTRVJfQ1JFREVOVElBTFMiLCJpYXQiOjE2OTc3NDA1MDR9.rZFYksUF_qEtOGtQhLIU5eUPSGeAprbDPkVRUTnAUMU"
+}
+
+### POST logout
+POST http://localhost:4000/logout
+Content-Type: application/json
+
+{
+  "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVkZXYiLCJnZW5lcmF0ZWRCeSI6IlVTRVJfQ1JFREVOVElBTFMiLCJpYXQiOjE2OTc3NDA1MDR9.rZFYksUF_qEtOGtQhLIU5eUPSGeAprbDPkVRUTnAUMU"
+}
+
+### GET posts
+GET http://localhost:3000/posts
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVkZXYiLCJnZW5lcmF0ZWRCeSI6IlJFRlJFU0hfVE9LRU4iLCJpYXQiOjE2OTc3NDA0NDgsImV4cCI6MTY5Nzc0MDQ2M30.riyIcTl0LoWoGaq-t_-aQt3l_-n-AR3V3rsEprs-V14
