@@ -2,3 +2,6 @@
 # https://www.youtube.com/watch?v=mbsmsi7l3r4&t=1s&ab_channel=WebDevSimplified
 
 # Saving refresh token in safe spot and access token has small exp time.
+
+# Id token vs access token
+# https://www.youtube.com/watch?v=vVM1Tpu9QB4&ab_channel=OktaDev
