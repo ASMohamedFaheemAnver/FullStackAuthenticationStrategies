@@ -9,9 +9,8 @@ import { onError } from "@apollo/client/link/error";
 import { setContext } from "@apollo/client/link/context";
 import { getMainDefinition } from "@apollo/client/utilities";
 import { Kind, OperationTypeNode } from "graphql";
-import { WebSocketLink } from "@apollo/client/link/ws";
-import { SubscriptionClient } from "subscriptions-transport-ws";
-
+import { GraphQLWsLink } from "@apollo/client/link/subscriptions";
+import { createClient } from "graphql-ws";
 // Global error handling
 const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (networkError) console.error(networkError);
@@ -24,16 +23,20 @@ const httpLink = createHttpLink({
 });
 
 // Subscription config
-const client = new SubscriptionClient(
-  process.env.REACT_APP_GRAPHQL_WS_SERVER_URI,
-  {
-    reconnect: true,
-    minTimeout: 55000, // Timeout connection in 55s and reconnect again.
-  }
-);
+const client = createClient({
+  url: process.env.REACT_APP_GRAPHQL_WS_SERVER_URI,
+  connectionParams: async () => {
+    const token = await getAuthToken();
+    return {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+  },
+});
 
 // Subscription link
-const wsLink = new WebSocketLink(client);
+const wsLink = new GraphQLWsLink(client);
 
 export const getAuthToken = async () => {
   const token = localStorage.getItem("token");

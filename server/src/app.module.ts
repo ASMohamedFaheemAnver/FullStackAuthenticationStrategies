@@ -30,14 +30,17 @@ import { FirebaseStrategy } from './strategies/firebase-strategy';
     MongooseModule.forRoot(config.dbUri),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
+
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       playground: process.env.NODE_ENV !== 'prod',
-      installSubscriptionHandlers: true,
       subscriptions: {
-        'subscriptions-transport-ws': {
-          keepAlive: 55000,
+        'graphql-ws': {
+          onConnect: (ctx) => {
+            return true;
+          },
         },
       },
+      // context: ({ connection }) => {},
     }),
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
     // We can only import PassportModule.

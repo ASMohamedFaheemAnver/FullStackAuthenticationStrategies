@@ -1,0 +1,2 @@
+# Execute subscriptions (or other operations) over WebSocket with the graphql-ws library
+# https://www.apollographql.com/docs/react/api/link/apollo-link-subscriptions
