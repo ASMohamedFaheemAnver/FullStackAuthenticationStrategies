@@ -66,6 +66,7 @@ import { writeFileSync } from 'fs';
                   context?.connectionParams?.headers?.['Authorization'].split(
                     ' ',
                   )[1];
+                // Decoding all auth provider tokens as expected
                 const wsPayload = jwtService.decode(token);
                 context.extra['user'] = wsPayload;
               },
