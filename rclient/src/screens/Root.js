@@ -14,20 +14,23 @@ const Root = () => {
   // Uncomment if need token
   // const { data: signInQueryData } = useQuery(SIGN_IN_QUERY);
   // useEffect(() => {
-  //   const token = signInQueryData?.signIn?.token;
-  //   setAuthToken(token);
+  //   if (signInQueryData) {
+  //     const token = signInQueryData?.signIn?.token;
+  //     console.log({ token });
+  //     setAuthToken(token);
+  //   }
   // }, [signInQueryData]);
 
-  useEffect(() => {
-    if (subLastSeenData) {
-      console.log({ subLastSeenData });
-    }
-  }, [subLastSeenData]);
-  useEffect(() => {
-    if (subLastSeenError) {
-      console.log({ subLastSeenError });
-    }
-  }, [subLastSeenError]);
+  // useEffect(() => {
+  //   if (subLastSeenData) {
+  //     console.log({ subLastSeenData });
+  //   }
+  // }, [subLastSeenData]);
+  // useEffect(() => {
+  //   if (subLastSeenError) {
+  //     console.log({ subLastSeenError });
+  //   }
+  // }, [subLastSeenError]);
 
   // if (loading) {
   //   return <div>loading</div>;

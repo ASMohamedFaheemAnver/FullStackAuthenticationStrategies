@@ -20,6 +20,7 @@ import { JwtStrategy } from './strategies/jwt-strategy';
 import { FirebaseAdminModule } from '@aginix/nestjs-firebase-admin';
 import * as admin from 'firebase-admin';
 import { FirebaseStrategy } from './strategies/firebase-strategy';
+import { writeFileSync } from 'fs';
 
 @Module({
   imports: [
@@ -30,17 +31,26 @@ import { FirebaseStrategy } from './strategies/firebase-strategy';
     MongooseModule.forRoot(config.dbUri),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
-
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       playground: process.env.NODE_ENV !== 'prod',
       subscriptions: {
         'graphql-ws': {
           onConnect: (ctx) => {
-            return true;
+            ctx.extra['user'] = { name: 'udev' };
           },
         },
       },
-      // context: ({ connection }) => {},
+      context: ({ extra, connectionParams, ...reset }) => {
+        if (connectionParams || extra) {
+          return {
+            req: {
+              user: extra?.user,
+            },
+          };
+        } else {
+          return reset;
+        }
+      },
     }),
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
     // We can only import PassportModule.

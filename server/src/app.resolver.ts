@@ -20,7 +20,7 @@ export class AppResolver {
   ) {
     this.pubSub = new PubSub();
   }
-
+  @UseGuards(AuthGuard)
   @Query((_) => Message)
   root(): Message {
     return { message: 'server is up and running' };
@@ -45,7 +45,7 @@ export class AppResolver {
     return { name: 'udev' };
   }
 
-  // @UseGuards(AuthGuard)
+  @UseGuards(AuthGuard)
   @Subscription((_) => SubPayload)
   subLastSeen(): AsyncIterator<SubPayload> {
     return this.pubSub.asyncIterator<SubPayload>('sub:lastSeen');

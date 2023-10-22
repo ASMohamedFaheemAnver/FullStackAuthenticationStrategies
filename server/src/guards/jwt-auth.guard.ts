@@ -22,16 +22,21 @@ export class AuthGuard extends PassportAuthGuard([
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     try {
-      await super.canActivate(context);
       const request = this.getRequest(context);
+      // If user already user exist it means we have mutated the context inside context using ws token.
+      // We are doing it in onConnection, don't know it will support multiple tokens
+      if (!request.user) await super.canActivate(context);
+      // console.log({ request });
       const roles = this.reflector.get<string[]>(
         PassportAuthStrategyKeys.roles,
         context.getHandler(),
       );
       const user = request.user;
+      // console.log({ user });
       if (roles?.length) {
       }
     } catch (err) {
+      console.log({ err });
       return false;
     }
     return true;
