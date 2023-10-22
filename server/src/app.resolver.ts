@@ -47,7 +47,8 @@ export class AppResolver {
 
   @UseGuards(AuthGuard)
   @Subscription((_) => SubPayload)
-  subLastSeen(): AsyncIterator<SubPayload> {
+  subLastSeen(@GetUser() user: User): AsyncIterator<SubPayload> {
+    console.log({ user });
     return this.pubSub.asyncIterator<SubPayload>('sub:lastSeen');
   }
 }

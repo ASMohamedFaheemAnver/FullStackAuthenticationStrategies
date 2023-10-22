@@ -15,7 +15,7 @@ import {
   PassportAuthStrategies,
 } from './constants/strings';
 import { CommonNumbers } from './constants/numbers';
-import { JwtModule } from '@nestjs/jwt';
+import { JwtModule, JwtService } from '@nestjs/jwt';
 import { JwtStrategy } from './strategies/jwt-strategy';
 import { FirebaseAdminModule } from '@aginix/nestjs-firebase-admin';
 import * as admin from 'firebase-admin';
@@ -29,27 +29,49 @@ import { writeFileSync } from 'fs';
       envFilePath: `.env.${process.env.NODE_ENV}`,
     }),
     MongooseModule.forRoot(config.dbUri),
-    GraphQLModule.forRoot<ApolloDriverConfig>({
+    GraphQLModule.forRootAsync<ApolloDriverConfig>({
       driver: ApolloDriver,
-      autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
-      playground: process.env.NODE_ENV !== 'prod',
-      subscriptions: {
-        'graphql-ws': {
-          onConnect: (ctx) => {
-            ctx.extra['user'] = { name: 'udev' };
-          },
-        },
-      },
-      context: ({ extra, connectionParams, ...reset }) => {
-        if (connectionParams || extra) {
-          return {
-            req: {
-              user: extra?.user,
+      imports: [
+        JwtModule.registerAsync({
+          inject: [ConfigService],
+          useFactory: (config: ConfigService) => ({
+            secret: config.get<string>(EnvKeys.JWT_SECRET),
+            signOptions: {
+              expiresIn: CommonNumbers.jwtExpiresIn,
             },
-          };
-        } else {
-          return reset;
-        }
+          }),
+        }),
+      ],
+      inject: [JwtService],
+      useFactory: async (jwtService: JwtService) => {
+        return {
+          autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+          playground: process.env.NODE_ENV !== 'prod',
+          installSubscriptionHandlers: true,
+          context: ({ extra, connectionParams, ...reset }) => {
+            if (connectionParams || extra) {
+              return {
+                req: {
+                  user: extra?.user,
+                },
+              };
+            } else {
+              return reset;
+            }
+          },
+          subscriptions: {
+            'graphql-ws': {
+              onConnect: async (context) => {
+                const token =
+                  context?.connectionParams?.headers?.['Authorization'].split(
+                    ' ',
+                  )[1];
+                const wsPayload = jwtService.decode(token);
+                context.extra['user'] = wsPayload;
+              },
+            },
+          },
+        };
       },
     }),
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
