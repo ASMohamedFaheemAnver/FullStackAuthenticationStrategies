@@ -25,7 +25,7 @@ export class AuthGuard extends PassportAuthGuard([
       const request = this.getRequest(context);
       // If user already user exist it means we have mutated the context inside context using ws token.
       // We are doing it in onConnection, don't know it will support multiple tokens
-      if (!request.user) await super.canActivate(context);
+      await super.canActivate(context);
       // console.log({ request });
       const roles = this.reflector.get<string[]>(
         PassportAuthStrategyKeys.roles,

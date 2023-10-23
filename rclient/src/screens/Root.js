@@ -12,14 +12,14 @@ const Root = () => {
     SUB_LAST_SEEN_SUBSCRIPTION
   );
   // Uncomment if need token
-  // const { data: signInQueryData } = useQuery(SIGN_IN_QUERY);
-  // useEffect(() => {
-  //   if (signInQueryData) {
-  //     const token = signInQueryData?.signIn?.token;
-  //     console.log({ token });
-  //     setAuthToken(token);
-  //   }
-  // }, [signInQueryData]);
+  const { data: signInQueryData } = useQuery(SIGN_IN_QUERY);
+  useEffect(() => {
+    if (signInQueryData) {
+      const token = signInQueryData?.signIn?.token;
+      console.log({ token });
+      setAuthToken(token);
+    }
+  }, [signInQueryData]);
 
   // useEffect(() => {
   //   if (subLastSeenData) {

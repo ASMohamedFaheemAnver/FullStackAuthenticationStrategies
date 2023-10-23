@@ -20,7 +20,6 @@ import { JwtStrategy } from './strategies/jwt-strategy';
 import { FirebaseAdminModule } from '@aginix/nestjs-firebase-admin';
 import * as admin from 'firebase-admin';
 import { FirebaseStrategy } from './strategies/firebase-strategy';
-import { writeFileSync } from 'fs';
 
 @Module({
   imports: [
@@ -52,7 +51,10 @@ import { writeFileSync } from 'fs';
             if (connectionParams || extra) {
               return {
                 req: {
-                  user: extra?.user,
+                  headers: {
+                    Authorization:
+                      connectionParams?.headers?.Authorization?.split(' ')[1],
+                  },
                 },
               };
             } else {
@@ -61,15 +63,15 @@ import { writeFileSync } from 'fs';
           },
           subscriptions: {
             'graphql-ws': {
-              onConnect: async (context) => {
-                const token =
-                  context?.connectionParams?.headers?.['Authorization'].split(
-                    ' ',
-                  )[1];
-                // Decoding all auth provider tokens as expected
-                const wsPayload = jwtService.decode(token);
-                context.extra['user'] = wsPayload;
-              },
+              // onConnect: async (context) => {
+              //   const token =
+              //     context?.connectionParams?.headers?.['Authorization'].split(
+              //       ' ',
+              //     )[1];
+              //   // Decoding all auth provider tokens as expected
+              //   const wsPayload = jwtService.decode(token);
+              //   context.extra['user'] = wsPayload;
+              // },
             },
           },
         };

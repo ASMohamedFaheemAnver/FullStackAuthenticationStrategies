@@ -9,7 +9,7 @@ export class FirebaseStrategy extends PassportStrategy(Strategy) {
     private firebaseAuthenticationService: FirebaseAuthenticationService,
   ) {
     super({
-      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+      jwtFromRequest: ExtractJwt.fromHeader('Authorization'),
     });
   }
   async validate(token: string) {
