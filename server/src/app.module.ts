@@ -79,6 +79,21 @@ import { FirebaseStrategy } from './strategies/firebase-strategy';
               //   context.extra['user'] = wsPayload;
               // },
             },
+            'subscriptions-transport-ws': {
+              // NestJS | Passport: TypeError: Cannot read properties of undefined (reading 'logIn')
+              // https://stackoverflow.com/questions/70644923/nestjs-passport-typeerror-cannot-read-properties-of-undefined-reading-logi
+              onConnect: (headersRaw: Record<string, unknown>) => {
+                const headers = Object.keys(headersRaw).reduce((dest, key) => {
+                  dest[key.toLowerCase()] = headersRaw[key];
+                  return dest;
+                }, {});
+                return {
+                  req: {
+                    headers: headers,
+                  },
+                };
+              },
+            },
           },
         };
       },

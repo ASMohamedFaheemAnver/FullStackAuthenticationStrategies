@@ -21,3 +21,5 @@ extractors.fromAuthHeaderAsBearerToken = function () {
     return extractors.fromAuthHeaderWithScheme(BEARER_AUTH_SCHEME);
 };
 
+# NestJS | Passport: TypeError: Cannot read properties of undefined (reading 'logIn')
+# https://stackoverflow.com/questions/70644923/nestjs-passport-typeerror-cannot-read-properties-of-undefined-reading-logi
