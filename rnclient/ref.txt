@@ -1,0 +1,15 @@
+# Start setting up firebase config using this doc.
+# https://rnfirebase.io/
+# Social auth google
+# https://rnfirebase.io/auth/social-auth#google
+# Google auth setup
+# https://github.com/react-native-google-signin/google-signin#project-setup-and-initialization
+
+
+
+# How to fix jlink does not exist
+# Need to install jlink separately in ubuntu I guess
+
+# SHA-256 and SHA-1 need to be configured to send OTP.
+# https://firebase.google.com/docs/auth/android/phone-auth?hl=en&authuser=0&_gl=1*25cune*_ga*MzUzMzg5OTk5LjE2OTkzNzM1Nzc.*_ga_CW55HF8NVT*MTcxMTc5NDI4Ni4yNy4xLjE3MTE3OTQ4NzIuNTQuMC4w
+# PhoneOTP seems working in only real device
