@@ -1,3 +1,6 @@
+import {AsyncStorageKeys} from '@constants/strings';
+import {useGetMeQuery, useSignInQuery} from '@graphql/actions/auth/queries';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import auth from '@react-native-firebase/auth';
 import {
   GoogleSignin,
@@ -6,9 +9,6 @@ import {
 import React, {useEffect} from 'react';
 import {ScrollView, Text, TouchableOpacity} from 'react-native';
 import config from './config';
-import {useGetMeQuery, useSignInQuery} from '@graphql/actions/auth/queries';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {AsyncStorageKeys} from '@constants/strings';
 
 GoogleSignin.configure({
   webClientId: config.webClientId,
@@ -17,6 +17,8 @@ GoogleSignin.configure({
 const GoogleSignIn = () => {
   const user = auth().currentUser;
   const [getMeQuery, {data, error}] = useGetMeQuery();
+  // signInQuery will give token on query and we can save it in the storage to query getMeQuery
+  // getAuthToken will give jwt token or firebase token to the db, Check it to modify it
   const [signInQuery, {data: signInData}] = useSignInQuery();
   useEffect(() => {
     if (user?.email) {
@@ -42,6 +44,15 @@ const GoogleSignIn = () => {
         AsyncStorage.setItem(AsyncStorageKeys.authorizationToken, token);
     }
   }, [signInData]);
+
+  const onSignOutPress = async () => {
+    try {
+      await AsyncStorage.removeItem(AsyncStorageKeys.authorizationToken);
+      await auth().signOut();
+    } catch (e) {
+      console.log({e});
+    }
+  };
 
   const onGoogleButtonPress = async () => {
     try {
@@ -78,13 +89,23 @@ const GoogleSignIn = () => {
         justifyContent: 'center',
         alignItems: 'center',
       }}>
-      <TouchableOpacity
-        onPress={() => {
-          onGoogleButtonPress();
-        }}
-        style={{backgroundColor: 'blue', padding: 15}}>
-        <Text style={{color: 'white'}}>Google SignIn</Text>
-      </TouchableOpacity>
+      {user ? (
+        <TouchableOpacity
+          onPress={() => {
+            onSignOutPress();
+          }}
+          style={{backgroundColor: 'red', padding: 15}}>
+          <Text style={{color: 'white'}}>Google SignOut</Text>
+        </TouchableOpacity>
+      ) : (
+        <TouchableOpacity
+          onPress={() => {
+            onGoogleButtonPress();
+          }}
+          style={{backgroundColor: 'blue', padding: 15}}>
+          <Text style={{color: 'white'}}>Google SignIn</Text>
+        </TouchableOpacity>
+      )}
     </ScrollView>
   );
 };
