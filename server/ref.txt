@@ -1,0 +1,23 @@
+# fromAuthHeaderAsBearerToken checks header in lowercase
+
+extractors.fromAuthHeaderWithScheme = function (auth_scheme) {
+    var auth_scheme_lower = auth_scheme.toLowerCase();
+    return function (request) {
+        var token = null;
+        console.log({before: request.headers, AUTH_HEADER})
+        if (request.headers[AUTH_HEADER]) {
+            var auth_params = auth_hdr.parse(request.headers[AUTH_HEADER]);
+            if (auth_params && auth_scheme_lower === auth_params.scheme.toLowerCase()) {
+                token = auth_params.value;
+            }
+        }
+        return token;
+    };
+};
+
+
+
+extractors.fromAuthHeaderAsBearerToken = function () {
+    return extractors.fromAuthHeaderWithScheme(BEARER_AUTH_SCHEME);
+};
+

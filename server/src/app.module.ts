@@ -58,8 +58,8 @@ import { FirebaseStrategy } from './strategies/firebase-strategy';
               return {
                 req: {
                   headers: {
-                    Authorization:
-                      connectionParams?.headers?.Authorization?.split(' ')[1],
+                    // fromAuthHeaderAsBearerToken checks lowercase, for more check ref.txt
+                    authorization: connectionParams?.headers?.Authorization,
                   },
                 },
               };
