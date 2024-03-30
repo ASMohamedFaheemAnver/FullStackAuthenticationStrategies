@@ -6,7 +6,6 @@ import { join } from 'path';
 import { AppResolver } from './app.resolver';
 import { AppService } from './app.service';
 import { User, UserSchema } from './schemas/user.schema';
-import config from './config';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { PassportModule } from '@nestjs/passport';
 import {
@@ -27,7 +26,14 @@ import { FirebaseStrategy } from './strategies/firebase-strategy';
       isGlobal: true,
       envFilePath: `.env.${process.env.NODE_ENV}`,
     }),
-    MongooseModule.forRoot(config.dbUri),
+    MongooseModule.forRootAsync({
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => {
+        return {
+          uri: config.get<string>(EnvKeys.MONGODB_URI),
+        };
+      },
+    }),
     GraphQLModule.forRootAsync<ApolloDriverConfig>({
       driver: ApolloDriver,
       imports: [
