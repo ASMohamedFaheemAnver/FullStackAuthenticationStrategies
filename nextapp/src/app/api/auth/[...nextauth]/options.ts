@@ -39,6 +39,7 @@ export const options: AuthOptions = {
     }),
     CredentialsProvider({
       name: "credentials",
+      // This will generate form for us
       credentials: {
         email: {
           label: "email:",
