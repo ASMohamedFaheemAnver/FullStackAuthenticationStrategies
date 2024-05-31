@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Nav from "@/app/components/Nav";
-import AuthProvider from "./providers/AuthProvider";
+import Nav from "@/components/Nav";
+import AuthProvider from "@/providers/AuthProvider";
 
 export const metadata: Metadata = {
   title: "Next auth",
