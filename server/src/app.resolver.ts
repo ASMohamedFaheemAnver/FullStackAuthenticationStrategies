@@ -36,7 +36,7 @@ export class AppResolver {
   @UseGuards(AuthGuard)
   @Query((_) => User)
   me(@GetUser() user: User): User {
-    // console.log({ function: this.me.name, user });
+    console.log({ function: this.me.name, user });
     setTimeout(() => {
       this.pubSub.publish('sub:lastSeen', {
         subLastSeen: { time: new Date() },

@@ -15,9 +15,12 @@ import {
 } from './constants/strings';
 import { CommonNumbers } from './constants/numbers';
 import { JwtModule, JwtService } from '@nestjs/jwt';
-import { JwtStrategy } from './strategies/jwt-strategy';
 import { FirebaseAdminModule } from '@aginix/nestjs-firebase-admin';
 import * as admin from 'firebase-admin';
+import { GoogleStrategy } from './strategies/google-strategy.old';
+import { AppController } from './app.controller';
+import { GoogleCustomStrategy } from './strategies/google-strategy';
+import { JwtStrategy } from './strategies/jwt-strategy';
 import { FirebaseStrategy } from './strategies/firebase-strategy';
 
 @Module({
@@ -118,7 +121,14 @@ import { FirebaseStrategy } from './strategies/firebase-strategy';
       }),
     }),
   ],
-  controllers: [],
-  providers: [AppResolver, AppService, JwtStrategy, FirebaseStrategy],
+  controllers: [AppController],
+  providers: [
+    AppResolver,
+    AppService,
+    JwtStrategy,
+    FirebaseStrategy,
+    // GoogleStrategy,
+    GoogleCustomStrategy,
+  ],
 })
 export class AppModule {}

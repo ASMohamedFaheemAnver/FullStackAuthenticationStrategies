@@ -5,7 +5,7 @@ import { ROOT_QUERY } from "graphql/query/root";
 import { SUB_LAST_SEEN_SUBSCRIPTION } from "graphql/subscription/auth";
 import { useEffect } from "react";
 
-const Root = () => {
+const FirebaseAndJWTLogin = () => {
   // const { loading, data } = useQuery(ROOT_QUERY);
   // const { data: meData } = useQuery(ME_QUERY);
   const { data: subLastSeenData, error: subLastSeenError } = useSubscription(
@@ -43,4 +43,4 @@ const Root = () => {
   );
 };
 
-export default Root;
+export default FirebaseAndJWTLogin;

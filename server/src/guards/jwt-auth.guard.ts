@@ -9,8 +9,9 @@ import {
 
 @Injectable()
 export class AuthGuard extends PassportAuthGuard([
-  PassportAuthStrategies.jwt,
-  PassportAuthStrategies.firebaseJwt,
+  // PassportAuthStrategies.jwt,
+  // PassportAuthStrategies.firebaseJwt,
+  PassportAuthStrategies.googleCustom,
 ]) {
   constructor(private readonly reflector: Reflector) {
     super();

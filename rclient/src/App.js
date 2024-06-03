@@ -1,11 +1,16 @@
 import { ApolloProvider } from "@apollo/client";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 import client from "client";
-import Root from "screens/Root";
+import FirebaseAndJWTLogin from "screens/FirebaseAndJWTLogin";
+import GoogleLogin from "screens/GoogleLogin";
 
 function App() {
   return (
     <ApolloProvider client={client}>
-      <Root />
+      <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
+        {/* <FirebaseAndJWTLogin /> */}
+        <GoogleLogin />
+      </GoogleOAuthProvider>
     </ApolloProvider>
   );
 }
