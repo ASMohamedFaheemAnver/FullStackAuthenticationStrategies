@@ -7,13 +7,17 @@ import { useEffect } from "react";
 const CGoogleLogin = () => {
   const [getMe, { data: meData }] = useLazyQuery(ME_QUERY);
 
-  useEffect(() => {
-    getMe();
-  }, []);
+  // useEffect(() => {
+  //   getMe();
+  // }, []);
+
+  const onGoogleLogin = () => {
+    window.open("http://localhost:5000/api/auth/google/login", "_self");
+  };
 
   return (
     <div>
-      <GoogleLogin
+      {/* <GoogleLogin
         onSuccess={(credentialResponse) => {
           setAuthToken(credentialResponse.credential);
           getMe();
@@ -21,7 +25,8 @@ const CGoogleLogin = () => {
         onError={() => {
           console.log({ msg: "FAILED!" });
         }}
-      />
+      /> */}
+      <button onClick={onGoogleLogin}>Google login</button>
     </div>
   );
 };
