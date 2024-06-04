@@ -19,7 +19,7 @@ export class AppController {
   }
 
   @UseGuards(AuthGuard)
-  @Get('user')
+  @Get('api/auth/google/login')
   async callback() {
     return true;
   }

@@ -11,7 +11,7 @@ import {
 export class AuthGuard extends PassportAuthGuard([
   // PassportAuthStrategies.jwt,
   // PassportAuthStrategies.firebaseJwt,
-  PassportAuthStrategies.googleCustom,
+  PassportAuthStrategies.google,
 ]) {
   constructor(private readonly reflector: Reflector) {
     super();

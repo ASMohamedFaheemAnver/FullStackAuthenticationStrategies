@@ -127,7 +127,7 @@ import { FirebaseStrategy } from './strategies/firebase-strategy';
     AppService,
     JwtStrategy,
     FirebaseStrategy,
-    // GoogleStrategy,
+    GoogleStrategy,
     GoogleCustomStrategy,
   ],
 })
