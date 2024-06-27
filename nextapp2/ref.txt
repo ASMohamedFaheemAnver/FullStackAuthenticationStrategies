@@ -1,0 +1,2 @@
+# What is the use of Adapters in NextAuth?
+-> https://stackoverflow.com/questions/76678908/what-is-the-use-of-adapters-in-nextauth

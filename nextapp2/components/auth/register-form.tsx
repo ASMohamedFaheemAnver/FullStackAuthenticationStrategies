@@ -40,6 +40,7 @@ export const RegisterForm = () => {
     startTransition(async () => {
       try {
         const response = await register(values);
+        if (response.success) form.reset();
         setSuccess(response.success);
         setError(response.error);
       } catch (e) {
@@ -56,8 +57,8 @@ export const RegisterForm = () => {
       showSocial
     >
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-          <div className="space-y-4">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
+          <div className="space-y-2">
             <FormField
               control={form.control}
               name="name"
