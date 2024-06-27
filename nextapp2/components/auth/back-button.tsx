@@ -10,7 +10,13 @@ type Props = {
 
 const BackButton = ({ href, label }: Props) => {
   return (
-    <Button variant={"link"} className="font-normal w-full" size={"sm"} asChild>
+    <Button
+      variant={"link"}
+      className="font-normal w-full"
+      size={"sm"}
+      asChild
+      type="button"
+    >
       <Link href={href}>{label}</Link>
     </Button>
   );
