@@ -6,6 +6,7 @@ import { getUserById } from "./data/user";
 import { UserRole } from "@prisma/client";
 // prettier-ignore
 import { JWT } from "next-auth/jwt";
+import { getTwoFactorConfirmationByUserId } from "./data/two-factor-confirmation";
 
 // Ref: https://authjs.dev/getting-started/typescript
 declare module "next-auth" {
@@ -50,8 +51,16 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       // Prevent sign in without email verification
       if (!existingUser?.emailVerified) return false;
 
-      // Todo: Add 2FA check
-
+      if (existingUser.isTwoFactorEnabled) {
+        const twoFactorConfirmation = await getTwoFactorConfirmationByUserId(
+          existingUser.id
+        );
+        if (!twoFactorConfirmation) return false;
+        // Delete two factor confirmation for next sign in
+        await db.twoFactorConfirmation.delete({
+          where: { id: twoFactorConfirmation.id },
+        });
+      }
       return true;
     },
     // Server side token
