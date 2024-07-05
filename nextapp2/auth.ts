@@ -7,6 +7,7 @@ import { UserRole } from "@prisma/client";
 // prettier-ignore
 import { JWT } from "next-auth/jwt";
 import { getTwoFactorConfirmationByUserId } from "./data/two-factor-confirmation";
+import { getAccountByUserId } from "./data/accounts";
 
 // Ref: https://authjs.dev/getting-started/typescript
 declare module "next-auth" {
@@ -17,6 +18,7 @@ declare module "next-auth" {
     user: {
       role: UserRole;
       isTwoFactorEnabled: boolean;
+      isOAuth: boolean;
       /**
        * By default, TypeScript merges new interface properties and overwrites existing ones.
        * In this case, the default session user properties will be overwritten,
@@ -71,6 +73,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         if (existingUser) {
           token.role = existingUser.role;
           token.isTwoFactorEnabled = existingUser.isTwoFactorEnabled;
+          const existingAccount = await getAccountByUserId(existingUser.id);
+          token.isOAuth = !!existingAccount;
         }
       }
       return token;
@@ -81,6 +85,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         session.user.id = token.sub;
         session.user.role = token.role;
         session.user.isTwoFactorEnabled = token.isTwoFactorEnabled as boolean;
+        session.user.isOAuth = token.isOAuth as boolean;
       }
       return session;
     },
