@@ -16,6 +16,7 @@ declare module "next-auth" {
   interface Session {
     user: {
       role: UserRole;
+      isTwoFactorEnabled: boolean;
       /**
        * By default, TypeScript merges new interface properties and overwrites existing ones.
        * In this case, the default session user properties will be overwritten,
@@ -69,6 +70,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         const existingUser = await getUserById(token.sub);
         if (existingUser) {
           token.role = existingUser.role;
+          token.isTwoFactorEnabled = existingUser.isTwoFactorEnabled;
         }
       }
       return token;
@@ -78,6 +80,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       if (token.sub && session.user) {
         session.user.id = token.sub;
         session.user.role = token.role;
+        session.user.isTwoFactorEnabled = token.isTwoFactorEnabled as boolean;
       }
       return session;
     },
