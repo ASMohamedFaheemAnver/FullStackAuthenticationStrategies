@@ -1,4 +1,4 @@
-import { auth } from "@/auth";
+import { auth, signOut } from "@/auth";
 import React from "react";
 
 type Props = {};
@@ -6,7 +6,19 @@ type Props = {};
 const Settings = async ({}: Props) => {
   const session = await auth();
 
-  return <div>{JSON.stringify(session)}</div>;
+  return (
+    <div>
+      {JSON.stringify(session)}
+      <form
+        action={async () => {
+          "use server";
+          await signOut();
+        }}
+      >
+        <button type="submit">Sign out</button>
+      </form>
+    </div>
+  );
 };
 
 export default Settings;
