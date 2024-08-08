@@ -1,0 +1,5 @@
+# Expo router setup
+# https://www.youtube.com/watch?v=Z20nUdAUGmM
+
+# Auth with amplify
+# https://www.youtube.com/watch?v=BGtVw_EEKZ8
