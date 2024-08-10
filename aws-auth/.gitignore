@@ -55,3 +55,8 @@ amplifytools.xcconfig
 .secret-*
 **.sample
 #amplify-do-not-edit-end
+
+# Ref: https://github.com/aws-amplify/amplify-ui/issues/5134#issuecomment-2045501829
+# We can ignore this, but I want them to make My first builds faster
+# android
+# ios
