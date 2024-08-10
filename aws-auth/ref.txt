@@ -3,3 +3,6 @@
 
 # Auth with amplify
 # https://www.youtube.com/watch?v=BGtVw_EEKZ8
+
+# Create ios directory
+# npx expo run:ios
